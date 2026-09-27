@@ -1,0 +1,39 @@
+name = "pebble-atproto-broker"
+main = "src/index.js"
+compatibility_date = "2024-11-06"
+
+# Static files, served straight from the edge. Anything not matched here falls
+# through to the worker.
+[assets]
+directory = "./public"
+
+[vars]
+CLIENT_NAME = "Pebble atproto broker"
+# PUBLIC_URL: your origin, with no trailing slash. It is the client_id, so it
+# must match byte-for-byte what the authorization server fetches. Unset, it is
+# whatever origin a request arrives on; set it once you add a custom domain.
+# CONTACT_EMAIL: shown on the privacy page. Unset, there is no contact section.
+# Set both as secrets (`npx wrangler secret put PUBLIC_URL`) so a redeploy of
+# this file cannot wipe them.
+# ALLOWED_DIDS: only these accounts can sign in. Space- or comma-separated.
+# Unset means anyone can sign in with their own account.
+
+# Identity infrastructure. Both optional: a DID resolves without a resolver,
+# and did:web resolves without a directory. Override to use your own replica,
+# or to avoid depending on a third party at all.
+# IDENTITY_RESOLVER = "https://slingshot.firehose.stream"
+# PLC_DIRECTORY = "https://didplc.directory"
+
+# Durable Objects, for everything that must happen exactly once or strictly in
+# order: single-use codes, the device list, and refresh-token rotation.
+[[durable_objects.bindings]]
+name = "ACCOUNTS"
+class_name = "PebbleBrokerAccount"
+
+[[durable_objects.bindings]]
+name = "CELLS"
+class_name = "PebbleBrokerCell"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["PebbleBrokerAccount", "PebbleBrokerCell"]

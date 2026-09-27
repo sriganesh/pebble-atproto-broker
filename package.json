@@ -1,0 +1,22 @@
+{
+  "name": "catapult-broker",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "keygen": "node tools/keygen.js",
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "test": "node --test tools/*.test.js"
+  },
+  "devDependencies": {
+    "wrangler": "^4.15.0"
+  },
+  "cloudflare": {
+    "bindings": {
+      "STORAGE_KEY": {
+        "description": "Encrypts everything the broker stores. Generate one with `openssl rand -base64 32`. Keep it: changing it later signs everyone out."
+      }
+    }
+  }
+}
