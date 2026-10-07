@@ -1,0 +1,9 @@
+node_modules/
+.DS_Store
+
+# Local secrets and Wrangler state
+.dev.vars
+.dev.vars.*
+.env
+.env.*
+.wrangler/
